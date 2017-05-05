@@ -5,8 +5,10 @@ int main(){
 	FILE *fp = NULL;
 	int operand1, operand2;
 	char operator = ' ';
-	int result, line = 0;
-
+	int line = 0;
+	double result =0 ;
+	int (*op)(int,int);	
+	
 	fp = fopen("read.txt","r");
 	if(fp!=NULL){
 		fscanf(fp, "%d", &line);
@@ -15,18 +17,20 @@ int main(){
 			fscanf(fp, "%d %c %d",&operand1, &operator, &operand2);
 			switch(operator) {
 				case '+':
-				result = add(operand1, operator);
+				op = add;
 				break;
 				case '-':
-				result = minus(operand1, operator);
+				op = minus;
 				break;
 				case '*':
-				result = mul(operand1, operator);
+				op = mul;
+				break;
 				case '/':
-				result = div(operand1, operator);
+				op = div;
 				break;
 			}		
-			printf("%d %c %d = %d\n",
+			result = op(operand1,operand2);
+			printf("%d %c %d = %f\n",
 				 operand1, operator, operand2, result);
 		}
 	}
